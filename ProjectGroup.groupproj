@@ -1,0 +1,60 @@
+﻿<Project xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+    <PropertyGroup>
+        <ProjectGuid>{DE38577E-E191-4862-BFB3-C4D631465A41}</ProjectGuid>
+    </PropertyGroup>
+    <ItemGroup>
+        <Projects Include="FirstPlugin\FirstPlugin.dproj">
+            <Dependencies/>
+        </Projects>
+        <Projects Include="Application\ExtendableApp.dproj">
+            <Dependencies/>
+        </Projects>
+        <Projects Include="SecondPlugin\SecondPlugin.dproj">
+            <Dependencies/>
+        </Projects>
+    </ItemGroup>
+    <ProjectExtensions>
+        <Borland.Personality>Default.Personality.12</Borland.Personality>
+        <Borland.ProjectType/>
+        <BorlandProject>
+            <Default.Personality/>
+        </BorlandProject>
+    </ProjectExtensions>
+    <Target Name="FirstPlugin">
+        <MSBuild Projects="FirstPlugin\FirstPlugin.dproj"/>
+    </Target>
+    <Target Name="FirstPlugin:Clean">
+        <MSBuild Projects="FirstPlugin\FirstPlugin.dproj" Targets="Clean"/>
+    </Target>
+    <Target Name="FirstPlugin:Make">
+        <MSBuild Projects="FirstPlugin\FirstPlugin.dproj" Targets="Make"/>
+    </Target>
+    <Target Name="ExtendableApp">
+        <MSBuild Projects="Application\ExtendableApp.dproj"/>
+    </Target>
+    <Target Name="ExtendableApp:Clean">
+        <MSBuild Projects="Application\ExtendableApp.dproj" Targets="Clean"/>
+    </Target>
+    <Target Name="ExtendableApp:Make">
+        <MSBuild Projects="Application\ExtendableApp.dproj" Targets="Make"/>
+    </Target>
+    <Target Name="SecondPlugin">
+        <MSBuild Projects="SecondPlugin\SecondPlugin.dproj"/>
+    </Target>
+    <Target Name="SecondPlugin:Clean">
+        <MSBuild Projects="SecondPlugin\SecondPlugin.dproj" Targets="Clean"/>
+    </Target>
+    <Target Name="SecondPlugin:Make">
+        <MSBuild Projects="SecondPlugin\SecondPlugin.dproj" Targets="Make"/>
+    </Target>
+    <Target Name="Build">
+        <CallTarget Targets="FirstPlugin;ExtendableApp;SecondPlugin"/>
+    </Target>
+    <Target Name="Clean">
+        <CallTarget Targets="FirstPlugin:Clean;ExtendableApp:Clean;SecondPlugin:Clean"/>
+    </Target>
+    <Target Name="Make">
+        <CallTarget Targets="FirstPlugin:Make;ExtendableApp:Make;SecondPlugin:Make"/>
+    </Target>
+    <Import Project="$(BDS)\Bin\CodeGear.Group.Targets" Condition="Exists('$(BDS)\Bin\CodeGear.Group.Targets')"/>
+</Project>
